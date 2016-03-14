@@ -1,6 +1,10 @@
 
 $(document).ready(function() {
 
+	var fireBase = new Firebase("https://pubtriviacalculator.firebaseio.com/");
+
+	fireBase.set({name: 'lol', test: 'test'});
+	
 	var counter = 0;
 	var roundCount = 5;
 

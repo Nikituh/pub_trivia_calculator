@@ -1,10 +1,8 @@
 
 $(document).ready(function() {
 
-	var fireBase = new Firebase("https://pubtriviacalculator.firebaseio.com/");
+	Parse.initialize("nu2ODMNFUme7MVibNXq0zhZNI3h8ACb7btaMmhJe", "hav8XU3gKQ7Gz3lLmW3dPvJuRnrT7xC3bmZhxKzW");
 
-	fireBase.set({name: 'lol', test: 'test'});
-	
 	var counter = 0;
 	var roundCount = 5;
 
@@ -65,7 +63,14 @@ $(document).ready(function() {
 	}
 
 	function saveData() {
-		console.log("saveData");
+		var TeamScores = Parse.Object.extend("TeamScores");
+		var team = new TeamScores();
+		
+		team
+			.save({scores: [1, 2, 3, 5], gameId: "firstGame", teamname: "testTeam1"})
+			.then(function(object) {
+  				alert("yay! it worked");
+		});
 	}
 
 	function sortingFunction(a, b) {

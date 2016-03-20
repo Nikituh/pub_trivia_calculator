@@ -12,7 +12,6 @@ $(document).ready(function() {
 	$(".remove_button").click(removeTeam);
 	$(".show_ordered_list_button").click(showOrderedList);
 	$(".toggle_popup_button").click(togglePopup);
-	$(".save_button").click(saveData);
 
 	$(".team_table").on("change", updateTotal);
 
@@ -60,17 +59,6 @@ $(document).ready(function() {
 				popup.css("display", "none");
 			});
 		}
-	}
-
-	function saveData() {
-		var TeamScores = Parse.Object.extend("TeamScores");
-		var team = new TeamScores();
-		
-		team
-			.save({scores: [1, 2, 3, 5], gameId: "firstGame", teamname: "testTeam1"})
-			.then(function(object) {
-  				alert("yay! it worked");
-		});
 	}
 
 	function sortingFunction(a, b) {

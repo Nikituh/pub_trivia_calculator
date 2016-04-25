@@ -1,0 +1,112 @@
+
+.wrapper {
+	margin-top: 20px;
+}
+
+.bar_text {
+	color: white;
+	padding-left: 5px;
+	font: 400 14px/24px 'Roboto', arial, sans-serif;
+	line-height: 50px;
+	float: left;
+}
+
+.navigation_button {
+	width: 30px;
+	height: 30px;
+	float: left;
+	margin-left: 25px;
+	margin-top: 10px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	
+	cursor: pointer;
+	cursor: hand;
+}
+
+.add_button {
+	background-image: url("../images/icon-team-add.png");
+}
+
+.remove_button {
+	background-image: url("../images/icon-team-remove.png");
+}
+
+.show_ordered_list_button {
+	width: 40px;
+	height: 40px;
+	margin-top: 5px;
+	background-image: url("../images/icon-team-reorder.png");
+}
+
+.finish_button {
+	margin-right: 15px;
+	float: right;
+	background-image: url("../images/icon-finish.png");
+}
+
+.popup {
+	position: absolute;
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+}
+
+.table_container {
+	margin: 0 auto;
+	margin-top: 50px;
+	width: 100%;
+	max-width: 900px;
+}
+
+.team_table {
+	width: 100%;
+}
+
+.team_row {
+	height: 26px;
+	width: 100%;
+	margin-top: 5px;
+	/*background-color: dodgerblue;*/
+}
+
+.row_data {
+	height: 26px;
+	width: 98%;
+	margin-left: 1%;
+}
+
+.data_number {
+	height: 26px;
+	color: darkgray;
+	text-align: center;
+	width: 5%;
+}
+
+.data_input_field {
+	margin-left: 1%;
+}
+
+.data_total {
+	width: 10%;
+}
+
+.data_team_name {
+	/*background-color: dodgerblue;*/
+	background-color: lightgray;
+	color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

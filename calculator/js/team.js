@@ -1,8 +1,6 @@
 
 $(document).ready(function() {
 
-	Parse.initialize("nu2ODMNFUme7MVibNXq0zhZNI3h8ACb7btaMmhJe", "hav8XU3gKQ7Gz3lLmW3dPvJuRnrT7xC3bmZhxKzW");
-
 	var counter = 0;
 	var roundCount = 5;
 

@@ -151,6 +151,24 @@ $(document).ready(function() {
 		table.append(body);
 	}
 
+
+	/********************* 
+		COOKIE BAKE!
+	*********************/
+
+	/********************* 
+		COOKIE EAT!
+	*********************/
+
+	var COUNTCOOKIE = 'TEAMCOUNT'
+	var COOKIELIFETIME = 1;
+
+	Cookies.set(COUNTCOOKIE, 'asehsh', { expires: COOKIELIFETIME, path: '' });
+
+	var count = Cookies.get(COUNTCOOKIE);
+
+	console.log(count);
+
 });
 
 

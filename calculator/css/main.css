@@ -3,6 +3,10 @@
 	CALCULATOR
 ********************/
 
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #F0F0F0;	
+}
 
 .wrapper {
 	margin-top: 20px;
@@ -11,7 +15,6 @@
 .bar_text {
 	color: white;
 	padding-left: 5px;
-	font: 400 14px/24px 'Roboto', arial, sans-serif;
 	line-height: 50px;
 	float: left;
 }

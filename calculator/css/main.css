@@ -1,4 +1,13 @@
 
+/******************** 
+	CALCULATOR
+********************/
+
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #F0F0F0;	
+}
+
 .wrapper {
 	margin-top: 20px;
 }
@@ -6,17 +15,16 @@
 .bar_text {
 	color: white;
 	padding-left: 5px;
-	font: 400 14px/24px 'Roboto', arial, sans-serif;
 	line-height: 50px;
 	float: left;
 }
 
 .navigation_button {
-	width: 30px;
-	height: 30px;
+	width: 25px;
+	height: 25px;
 	float: left;
-	margin-left: 25px;
-	margin-top: 10px;
+	margin-left: 30px;
+	margin-top: 12.5px;
 	background-size: contain;
 	background-repeat: no-repeat;
 	
@@ -33,14 +41,15 @@
 }
 
 .show_ordered_list_button {
-	width: 40px;
-	height: 40px;
-	margin-top: 5px;
-	background-image: url("../images/icon-team-reorder.png");
+	width: 35px;
+	height: 35px;
+	margin-top: 7.5px;
+	margin-left: 70px;
+	background-image: url("../images/icon-award.png");
 }
 
 .finish_button {
-	margin-right: 15px;
+	margin-right: 30px;
 	float: right;
 	background-image: url("../images/icon-finish.png");
 }
@@ -62,24 +71,27 @@
 
 .team_table {
 	width: 100%;
+	    border-collapse:separate;
+    border-spacing:0 5px;
 }
 
 .team_row {
-	height: 26px;
+	/*height: 26px;*/
 	width: 100%;
 	margin-top: 5px;
-	/*background-color: dodgerblue;*/
+	background-color: #3C474B;
 }
 
 .row_data {
-	height: 26px;
-	width: 98%;
+	height: 35px;
+	line-height: 35px;
+	width: 100%;
 	margin-left: 1%;
 }
 
 .data_number {
 	height: 26px;
-	color: darkgray;
+	color: rgb(245, 245, 245);
 	text-align: center;
 	width: 5%;
 }
@@ -93,7 +105,6 @@
 }
 
 .data_team_name {
-	/*background-color: dodgerblue;*/
 	background-color: lightgray;
 	color: white;
 }

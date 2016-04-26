@@ -39,11 +39,11 @@ body {
 	background: -webkit-linear-gradient(right,  #4c4c4c 0%,#000000 6%,#595959 12%,#383838 15%,#666666 25%,#191919 34%,#191919 34%,#2c2c2c 50%,#111111 60%,#474747 73%,#474747 73%,#3f3f3f 76%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to right,  #4c4c4c 0%,#000000 6%,#595959 12%,#383838 15%,#666666 25%,#191919 34%,#191919 34%,#2c2c2c 50%,#111111 60%,#474747 73%,#474747 73%,#3f3f3f 76%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#3f3f3f',GradientType=0 ); /* IE6-9 */
-
+	background: rgb(40, 40, 40);
 }
 
 .navigation_icon {
-	background-image: url("../images/logo.png");
+	background-image: url("../images/logo-beer.png");
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;

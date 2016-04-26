@@ -11,26 +11,40 @@ $(document).ready(function() {
 	$(".show_ordered_list_button").click(showOrderedList);
 	$(".toggle_popup_button").click(togglePopup);
 
-	$(".team_table").on("change", updateTotal);
+	var table = $(".team_table");
+
+	table.on("change", updateTotal);
+
+	addHeader();
+	addBody();
+
+	var header = $("th");
+	header.hide();
 
 	function addTeam() {
 		counter++;
+		console.log("addteam");
 		$(".team_table tbody").append(getRow());
+		header.show();
 	}
 
 	function removeTeam() {
+		console.log(counter)
 		if (counter > 0) {
 			counter--;
 			var lastRow = $(".team_table tr:last");
 			lastRow.remove();
+
+			if (counter == 0) {
+				header.hide();
+			}
 		} else {
-			// TODO
+			
 		}
 	}
 
 	function showOrderedList() {
 
-		var table = $(".team_table");
 		var rows = table.find("tr").get();
 
 		rows.sort(sortingFunction);
@@ -125,6 +139,16 @@ $(document).ready(function() {
 	function getTotalLabel() {
 		var random = Math.floor((Math.random() * 50) + 1);
 		return "<td class='row_data data_number total_field'>" + random + "</td>";
+	}
+
+	function addHeader() {
+		var header = "<th> </th> <th> Team </th> <th> I </th> <th> II </th> <th> III </th> <th> IV </th> <th> VI </th>";
+		table.append(header);
+	}
+
+	function addBody() {
+		var body = "<tbody> </tbody>";
+		table.append(body);
 	}
 
 });

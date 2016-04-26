@@ -23,5 +23,8 @@ function SetCookies() {
 }
 
 function GetTeamsFromCookie() {
+	var count = Cookies.get(COUNTCOOKIE);
+	var teams = Cookies.get(TEAMCOOKIE);
 
+	console.log("CookieCount: " + teams.length);
 }

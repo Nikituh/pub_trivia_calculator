@@ -4,12 +4,11 @@ $(document).ready(function() {
 	var counter = 0;
 	var roundCount = 5;
 
-	var teams = {};
-
 	$(".add_button").click(addTeam);
 	$(".remove_button").click(removeTeam);
 	$(".show_ordered_list_button").click(showOrderedList);
 	$(".toggle_popup_button").click(togglePopup);
+	$(".finish_button").click(finishGame);
 
 	var table = $(".team_table");
 
@@ -23,8 +22,10 @@ $(document).ready(function() {
 
 	function addTeam() {
 		counter++;
-		$(".team_table tbody").append(getRow());
 		header.show();
+
+		$(".team_table tbody").append(getRow());
+		Teams.push(new Team());
 	}
 
 	function removeTeam() {
@@ -33,10 +34,12 @@ $(document).ready(function() {
 			counter--;
 			var lastRow = $(".team_table tr:last");
 			lastRow.remove();
+			Teams.splice(-1, 1);
 
 			if (counter == 0) {
 				header.hide();
 			}
+
 		} else {
 			
 		}
@@ -94,11 +97,11 @@ $(document).ready(function() {
 	function updateTotal () {
 
 		var row = $(event.target).closest("tr");
+		var rowIndex = $("table tr").index(row);
+		var team = Teams[rowIndex];
 
 		var inputFields = row.find(".data_input_field");
 		var totalLabel = row.find(".total_field")[0];
-
-		var total = 0;
 
 		for (var i = 1; i < inputFields.length; i++) {
 			
@@ -106,11 +109,12 @@ $(document).ready(function() {
 			var value = parseInt(field.value);
 			
 			if (value != undefined && !isNaN(value)) {
-				total += value
+				var scoreIndex = i - 1;
+				team.Scores[scoreIndex] = value;
 			}
 		}
 
-		$(totalLabel).html(total);
+		$(totalLabel).html(team.Total());
 	}
 
 	function getRow () {
@@ -140,7 +144,7 @@ $(document).ready(function() {
 	}
 
 	function addHeader() {
-		var header = "<th> </th> <th> Team </th> <th> I </th> <th> II </th> <th> III </th> <th> IV </th> <th> VI </th>";
+		var header = "<th> </th> <th> Team </th> <th> I </th> <th> II </th> <th> III </th> <th> IV </th> <th> V </th>";
 		table.append(header);
 	}
 
@@ -149,23 +153,29 @@ $(document).ready(function() {
 		table.append(body);
 	}
 
+	function finishGame() {
+		for (var i = 0; i < Teams.length; i++) {
+			var team = Teams[i];
+			team.LogInfo();
+		}
+	}
 
 	/********************* 
-		COOKIE BAKE!
-	*********************/
-
-	/********************* 
-		COOKIE EAT!
+		COOKIE SET!
 	*********************/
 
 	var COUNTCOOKIE = 'TEAMCOUNT'
 	var COOKIELIFETIME = 1;
 
-	Cookies.set(COUNTCOOKIE, 'asehsh', { expires: COOKIELIFETIME, path: '' });
+	Cookies.set(COUNTCOOKIE, Teams.length, { expires: COOKIELIFETIME });
+	
+	for (var i = 0; i < Teams.length; i++ ) {
 
-	var count = Cookies.get(COUNTCOOKIE);
+	}
 
-	console.log(count);
+	/********************* 
+		COOKIE GET!
+	*********************/
 
 });
 

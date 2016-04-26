@@ -115,6 +115,8 @@ $(document).ready(function() {
 		}
 
 		$(totalLabel).html(team.Total());
+
+		team.Name = inputFields[0].value;
 	}
 
 	function getRow () {
@@ -159,23 +161,6 @@ $(document).ready(function() {
 			team.LogInfo();
 		}
 	}
-
-	/********************* 
-		COOKIE SET!
-	*********************/
-
-	var COUNTCOOKIE = 'TEAMCOUNT'
-	var COOKIELIFETIME = 1;
-
-	Cookies.set(COUNTCOOKIE, Teams.length, { expires: COOKIELIFETIME });
-	
-	for (var i = 0; i < Teams.length; i++ ) {
-
-	}
-
-	/********************* 
-		COOKIE GET!
-	*********************/
 
 });
 

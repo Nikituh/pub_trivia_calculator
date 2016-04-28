@@ -1,4 +1,6 @@
-
+		
+URL = "http://pubtrivia.thinkforce.eu/php/save.php"
+		
 $(document).ready(function() {
 
 	var counter = 0;
@@ -8,6 +10,8 @@ $(document).ready(function() {
 	$(".remove_button").click(removeTeam);
 	$(".show_ordered_list_button").click(showOrderedList);
 	$(".toggle_popup_button").click(togglePopup);
+	$(".popup").click(togglePopup);
+	
 	$(".finish_button").click(finishGame);
 
 	var table = $(".team_table");
@@ -95,7 +99,14 @@ $(document).ready(function() {
 	}
 	
 	function finishGame() {
-		console.log(GetTeamsFromCookie());
+
+		$.get(URL, function(data) {
+			console.log("Great success: " + data);
+		})
+		.fail(function() {
+			console.log("Oops! Something went terribly wrong. Please try reloading the page. " + URL);
+		})
+
 	}
 
 	function sortingFunction(a, b) {
@@ -207,15 +218,6 @@ $(document).ready(function() {
 			}
 		}
 	}
-
-	URL = "http://pubtrivia.thinkforce.eu/php/save.php"
-	
-	$.get(URL, function(data) {
-		console.log("Great success: " + data);
-	})
-	.fail(function() {
-		console.log("Oops! Something went terribly wrong. Please try reloading the page. " + URL);
-	})
 
 });
 

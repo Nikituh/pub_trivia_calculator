@@ -208,6 +208,15 @@ $(document).ready(function() {
 		}
 	}
 
+	URL = "http://pubtrivia.thinkforce.eu/php/save.php"
+	
+	$.get(URL, function(data) {
+		console.log("Great success: " + data);
+	})
+	.fail(function() {
+		console.log("Oops! Something went terribly wrong. Please try reloading the page. " + URL);
+	})
+
 });
 
 

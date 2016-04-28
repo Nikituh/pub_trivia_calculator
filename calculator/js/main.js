@@ -4,7 +4,7 @@ $(document).ready(function() {
 	var counter = 0;
 	var roundCount = 5;
 
-	$(".add_button").click(addTeam);
+	$(".add_button").click(addTeamButtonPressed);
 	$(".remove_button").click(removeTeam);
 	$(".show_ordered_list_button").click(showOrderedList);
 	$(".toggle_popup_button").click(togglePopup);
@@ -18,14 +18,33 @@ $(document).ready(function() {
 	addBody();
 
 	var header = $("th");
-	header.hide();
+	
+	if (HasCookies()) {
+		Teams = GetTeamsFromCookie();
+		addSavedTeams();
+	}
 
-	function addTeam() {
+	if (Teams.length == 0) {
+		header.hide();
+	}
+
+	function addTeamButtonPressed() {
+		addTeam(true);
+	}
+
+	function addTeam(add) {
 		counter++;
 		header.show();
 
-		$(".team_table tbody").append(getRow());
-		Teams.push(new Team());
+		var row = getRow();
+		$(".team_table tbody").append(row);
+		
+		if (add) {
+			Teams.push(new Team());
+			SetCookies();
+		}
+
+		return row;
 	}
 
 	function removeTeam() {
@@ -35,13 +54,14 @@ $(document).ready(function() {
 			var lastRow = $(".team_table tr:last");
 			lastRow.remove();
 			Teams.splice(-1, 1);
+			SetCookies();
 
 			if (counter == 0) {
 				header.hide();
 			}
 
 		} else {
-			
+			// TODO?
 		}
 	}
 
@@ -56,8 +76,7 @@ $(document).ready(function() {
 		});
 	}
 
-	function togglePopup ()
-	{
+	function togglePopup () {
 		var duration = 300;
 
 		var popup = $(".popup");
@@ -73,6 +92,10 @@ $(document).ready(function() {
 				popup.css("display", "none");
 			});
 		}
+	}
+	
+	function finishGame() {
+		console.log(GetTeamsFromCookie());
 	}
 
 	function sortingFunction(a, b) {
@@ -100,7 +123,7 @@ $(document).ready(function() {
 		var rowIndex = $("table tr").index(row);
 		var team = Teams[rowIndex];
 
-		var inputFields = row.find(".data_input_field");
+		var inputFields = getInputFieldsFromRow(row);
 		var totalLabel = row.find(".total_field")[0];
 
 		for (var i = 1; i < inputFields.length; i++) {
@@ -117,6 +140,11 @@ $(document).ready(function() {
 		$(totalLabel).html(team.Total());
 
 		team.Name = inputFields[0].value;
+		SetCookies();
+	}
+
+	function getInputFieldsFromRow(row) {
+		return row.find(".data_input_field");
 	}
 
 	function getRow () {
@@ -155,10 +183,28 @@ $(document).ready(function() {
 		table.append(body);
 	}
 
-	function finishGame() {
+	function addSavedTeams() {
+
+		var counter = 0;
+
 		for (var i = 0; i < Teams.length; i++) {
 			var team = Teams[i];
-			team.LogInfo();
+			var row = addTeam(false);
+			var fields = getInputFieldsFromRow(row);
+			
+			if (team.HasName()) { 
+				fields[0].value = team.Name;
+			}
+
+			for (var j = 1; j < fields.length; j++) {
+				var field = fields[j];
+				var index = j - 1;
+				var value = team.Scores[index];
+
+				if (value != undefined && !isNaN(value) && value != 0) {
+					field.value = value;
+				}
+			}
 		}
 	}
 

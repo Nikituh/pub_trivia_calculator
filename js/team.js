@@ -21,10 +21,6 @@ Team.prototype.Total = function() {
 	return total;
 };
 
-Team.prototype.HasName = function() {
-	return this.Name != undefined && this.Name != "" && this.Name != "none";
-};
-
 Team.prototype.LogInfo = function() {
 	var log = this.Name + "[";
 

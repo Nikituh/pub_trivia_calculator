@@ -48,6 +48,13 @@ body {
 	background-image: url("../images/icon-award.png");
 }
 
+.toggle_popup_button {
+	background-image: url("../images/icon-test.png");
+	height: 40px;
+	width: 40px;
+	margin-top: 12px;
+}
+
 .finish_button {
 	margin-right: 30px;
 	float: right;

@@ -1,30 +1,54 @@
 
+
 var COOKIELIFETIME = 1;
 
-var COUNTCOOKIE = 'TEAMCOUNT'
 var TEAMCOOKIE = 'TEAMS';
 
 function HasCookies() {
-	return Cookies.get() != undefined;
+	return Cookies.get(TEAMCOOKIE) != undefined;
 }
 
 function SetCookies() {
-
-	Cookies.set(COUNTCOOKIE, Teams.length, { expires: COOKIELIFETIME });
 
 	var teamJSON = [];
 
 	for (var i = 0; i < Teams.length; i++ ) {
 		var team = Teams[i];
-		teamJSON.push( { _team: team.Name, _scores: team.Scores });
+		var item = { _team: team.Name, _scores: team.Scores };
+		teamJSON.push(item);
 	}
 
 	Cookies.set(TEAMCOOKIE, teamJSON, { expires: COOKIELIFETIME });
 }
 
 function GetTeamsFromCookie() {
-	var count = Cookies.get(COUNTCOOKIE);
+	var list = [];
 	var teams = Cookies.get(TEAMCOOKIE);
+	var json = JSON.parse(teams);
 
-	console.log("CookieCount: " + teams.length);
+	for (var i = 0; i < json.length; i++) {
+		var child = json[i];
+		var team = getTeamFromJSON(child);
+		list.push(team);
+	}
+
+	return list;
 }
+
+function getTeamFromJSON(json) {
+	var team = new Team();
+	team.Name = json["_team"];
+	team.Scores = json["_scores"];
+
+	return team;
+}
+
+
+
+
+
+
+
+
+
+

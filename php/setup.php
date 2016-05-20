@@ -1,17 +1,10 @@
 <?php
 
+require_once 'conf.php';
+
 // CONSTANTS
 
-$max_length = 50;
-
-// TABLES
-
-$table_team = 'team';
-
-// COLUMNS
-
-$column_teamname = 'name';
-$column_id = 'id';
+$max_length = 100;
 
 // MESSAGES
 
@@ -29,9 +22,27 @@ $failed_to_drop_table = "Failed to drop table";
 
 // TABLES
 
-$sql_create_table_teams = 'CREATE TABLE ' . $table_team . ' ('
-	.$column_id . ' INT NOT NULL PRIMARY KEY,' 
-	.$column_teamname.' VARCHAR(' . $max_length . ') NOT NULL)';
+$sql_create_table_game = 'CREATE TABLE ' . $table_game . ' ('
+	.$column_id . ' VARCHAR(' . $max_length . ')  NOT NULL PRIMARY KEY,'
+	.$column_date . ' VARCHAR(' . $max_length . ') NOT NULL,'
+	.$column_organizer . ' VARCHAR(' . $max_length . ') NOT NULL)';
+
+$sql_create_table_team = 'CREATE TABLE ' . $table_team . ' ('
+	.$column_id . ' VARCHAR(' . $max_length . ')  NOT NULL PRIMARY KEY,' 
+	.$column_name.' VARCHAR(' . $max_length . ') NOT NULL)';
+
+$sql_create_table_score = 'CREATE TABLE ' . $table_score . ' ('
+	.$column_id . ' INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
+	.$column_team_id . ' VARCHAR(' . $max_length . ')  NOT NULL,'
+	.$column_game_id . ' VARCHAR(' . $max_length . ')  NOT NULL,'
+	.$column_value . ' INT NOT NULL)';
+
+$sql_create_table_teamgame = 'CREATE TABLE ' . $table_teamgame . ' ('
+	.$column_id . ' INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
+	.$column_team_id . ' VARCHAR(' . $max_length . ')  NOT NULL,'
+	.$column_game_id . ' VARCHAR(' . $max_length . ')  NOT NULL,'
+	.$column_place . ' INT NOT NULL,'
+	.$column_points . ' INT NOT NULL)';
 
 // TABLE COMMANDS
 
@@ -50,7 +61,10 @@ if ($mysqli->connect_error) {
 }
 
 
-$result = create_table($sql_create_table_teams, $table_team);
+$result = create_table($sql_create_table_game, $table_game) && 
+		  create_table($sql_create_table_team, $table_team) && 
+		  create_table($sql_create_table_score, $table_score) &&
+		  create_table($sql_create_table_teamgame, $table_teamgame);
 
 // FUNCTIONS
 

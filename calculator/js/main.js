@@ -1,10 +1,13 @@
-		
-URL = "http://pubtrivia.thinkforce.eu/php/save.php"
-		
+
+
 $(document).ready(function() {
 
 	var counter = 0;
 	var roundCount = 5;
+
+	/****************** 
+		EVENTHANDLERS
+	*******************/
 
 	$(".add_button").click(addTeamButtonPressed);
 	$(".remove_button").click(removeTeam);
@@ -18,11 +21,15 @@ $(document).ready(function() {
 
 	table.on("change", updateTotal);
 
+	/****************** 
+		UI INIT / GET COOKIE DATA
+	*******************/
+
 	addHeader();
 	addBody();
 
 	var header = $("th");
-	
+		
 	if (HasCookies()) {
 		Teams = GetTeamsFromCookie();
 		addSavedTeams();
@@ -31,6 +38,10 @@ $(document).ready(function() {
 	if (Teams.length == 0) {
 		header.hide();
 	}
+
+	/****************** 
+		BUTTONS
+	*******************/
 
 	function addTeamButtonPressed() {
 		addTeam(true);
@@ -70,7 +81,7 @@ $(document).ready(function() {
 	}
 
 	function showOrderedList() {
-
+		
 		var rows = table.find("tr").get();
 
 		rows.sort(sortingFunction);
@@ -98,16 +109,39 @@ $(document).ready(function() {
 		}
 	}
 	
+	URL = "http://pubtrivia.thinkforce.eu/php/save.php"
+		
 	function finishGame() {
-
-		$.get(URL, function(data) {
-			console.log("Great success: " + data);
-		})
-		.fail(function() {
-			console.log("Oops! Something went terribly wrong. Please try reloading the page. " + URL);
-		})
-
+		console.log("FinishGame");
+		// IsGameFinished();
+		console.log(EncodeGame());
+		post();
 	}
+
+	function post() {
+		$.ajax({
+		    type: 'POST',
+		    url: URL,
+		    data: EncodeGame(),
+		    success: onSuccess,
+		    error: onError,
+		    contentType: "application/json"
+		});
+
+		// add: dataType: 'json' if response will be json
+	}
+
+	function onSuccess(data) {
+		console.log("Data: " + data);
+	}
+
+	function onError(XMLHttpRequest, textStatus, errorThrown) {
+		console.log("OnError: " + textStatus + " - " + errorThrown);
+	}
+
+	/****************** 
+		SORTING LOGIC
+	*******************/
 
 	function sortingFunction(a, b) {
 
@@ -129,7 +163,7 @@ $(document).ready(function() {
 	}
 
 	function updateTotal () {
-
+		
 		var row = $(event.target).closest("tr");
 		var rowIndex = $("table tr").index(row);
 		var team = Teams[rowIndex];
@@ -145,6 +179,8 @@ $(document).ready(function() {
 			if (value != undefined && !isNaN(value)) {
 				var scoreIndex = i - 1;
 				team.Scores[scoreIndex] = value;
+			} else {
+				console.log("value is undefined or nan");
 			}
 		}
 
@@ -154,8 +190,16 @@ $(document).ready(function() {
 		SetCookies();
 	}
 
+	/****************** 
+		UI REFERENCES
+	*******************/
+
 	function getInputFieldsFromRow(row) {
 		return row.find(".data_input_field");
+	}
+
+	function getTotalFieldFromRow(row) {
+		return row.find(".total_field");
 	}
 
 	function getRow () {
@@ -194,6 +238,10 @@ $(document).ready(function() {
 		table.append(body);
 	}
 
+	/****************** 
+		COOKIE DATA HANDLING
+	*******************/
+
 	function addSavedTeams() {
 
 		var counter = 0;
@@ -203,6 +251,9 @@ $(document).ready(function() {
 			var row = addTeam(false);
 			var fields = getInputFieldsFromRow(row);
 			
+			var totalField = getTotalFieldFromRow(row);
+			totalField.html(team.Total());
+
 			if (team.HasName()) { 
 				fields[0].value = team.Name;
 			}

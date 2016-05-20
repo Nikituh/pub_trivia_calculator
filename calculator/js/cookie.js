@@ -4,6 +4,32 @@ var COOKIELIFETIME = 1;
 
 var TEAMCOOKIE = 'TEAMS';
 
+// DeleteCookies ();
+
+function DeleteCookies() {
+	var cookies = document.cookie.split(";");
+	
+	for (var i = 0; i < cookies.length; i++) {
+  		eraseCookie(cookies[i].split("=")[0]);
+  	}
+}
+
+function createCookie(name,value,days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    } else {
+    	var expires = "";
+    }
+
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function eraseCookie(name) {
+    createCookie(name,"",-1);
+}
+
 function HasCookies() {
 	return Cookies.get(TEAMCOOKIE) != undefined;
 }
@@ -38,7 +64,14 @@ function GetTeamsFromCookie() {
 function getTeamFromJSON(json) {
 	var team = new Team();
 	team.Name = json["_team"];
-	team.Scores = json["_scores"];
+	// team.Scores = json["_scores"];
+	
+	var scores = json["_scores"];
+
+	for (var i = 0; i < scores.length; i++) {
+		var score = scores[i];
+		team.Scores[i] = parseInt(score);
+	}
 
 	return team;
 }

@@ -43,6 +43,68 @@ Team.prototype.LogInfo = function() {
 	console.log(log);
 };
 
+function IsGameFinished() {
+	for (var i = 0; i < Teams.length; i++) {
+		var team = Teams[i];
+
+		for (var j = 0; j < team.Scores.length; i++) {
+			var score = team.Scores[i];
+			if (score == 0) {
+				console.log("Game is not finished");
+				return false;
+			}
+		}
+	}
+
+	console.log("Game is finished");
+	return true;
+}
+
+function EncodeGame() {
+	
+	var array = [];
+
+	for (var i = 0; i < Teams.length; i++) {
+		var team = Teams[i];
+
+		array.push({ "name": team.Name, "scores": team.Scores });
+	}
+	
+	var date = getDate();
+	
+	var json = { "organizer": "KPT", "teams": array, "date": date };
+
+	return JSON.stringify(json);
+}
+
+function getDate() {
+
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; // January is 0!
+	var yyyy = today.getFullYear();
+
+	if (dd < 10) {
+		dd = '0' + dd;
+	} 
+
+	if (mm < 10) {
+		mm = '0'+mm;
+	} 
+
+	return dd + '/' + mm + '/' + yyyy;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

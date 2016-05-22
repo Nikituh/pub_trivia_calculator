@@ -75,15 +75,35 @@ class Score extends Base
     public $GameId;
 
     public $Value;
+
+    public function GetTeamGame() {
+
+        $teamgame = new TeamGame();
+        $teamgame->GameId = $this->GameId;
+        $teamgame->TeamId = $this->TeamId;
+        $teamgame->Points = $this->Value;
+        $teamgame->Place = 0;
+        return $teamgame;
+    }
 }
 
-class TeamScore extends Base
+class TeamGame extends Base
 {
     public $GameId;
 
     public $TeamId;
 
     public $Points;
+
+    public $Place;
+
+    function __construct() {
+        $this->Place = 0;
+    }
+
+    public function __toString() {
+        return $this->GameId . "/" . $this->TeamId . "/" . $this->Points . "/" . $this->Place;
+    }
 }
 
 ?>

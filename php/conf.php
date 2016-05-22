@@ -42,9 +42,9 @@ $insert_score = 'INSERT INTO '.$table_score.' SET '
 	.$column_game_id.' = \'%s\', '
 	.$column_team_id.' = \'%s\'';
 
-$insert_teamgame = 'INSERT INTO'.$table_teamgame.' SET '
+$insert_teamgame = 'INSERT INTO '.$table_teamgame.' SET '
 	// .$column_id. ' = \'%s\', '
-	// .$column_place. ' = \'%s\', '
+	.$column_place. ' = \'%s\', '
 	.$column_points. ' = \'%s\', '
 	.$column_game_id.' = \'%s\', '
 	.$column_team_id.' = \'%s\'';

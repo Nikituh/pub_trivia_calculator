@@ -2,7 +2,9 @@
 
 require_once 'conf.php';
 require_once 'team.php';
+
 // require_once 'setup.php';
+// exit;
 
 $message_connection_error = "Error connecting to database";
 $message_invalid_fields = "INVALID_DATA";
@@ -49,7 +51,7 @@ $connection = new mysqli($mysql_server, $mysql_username, $mysql_password, $mysql
 
 if ($connection->connect_error) {
     printf($message_connection_failed, $mysqli->connect_errno, $mysqli->connect_error);
-    echo($message_connection_error);
+    echo("Error: " . $message_connection_error);
     exit;
 }
 
@@ -57,23 +59,26 @@ if (insert_game($game)) {
 	foreach ($teams as $team) {
 		
 		if (!insert_team($team)) {
-			echo("Failed insert team ");
+			// echo("Error: Failed insert team " . $team->Name);
+			// exit;
 		}
 
 		foreach ($team->Scores as $score) {
 			if (!insert_score($score)) {
-				echo("Failed insert score ");
+				echo("Error: Failed insert score of team " . $team->Name);
 			}
 
-			// $teamscore = $score->GetTeamScore();
-
-			// if (!insert_teamscore($teamscore)) {
-			// 	echo("Failed insert teamscore");
-			// }
+			$teamgame = $score->GetTeamGame();
+			
+			if (!insert_teamgame($teamgame)) {
+				echo("Error: Failed insert teamgame of team " . $team->Name);
+				exit;
+			}
 		}
 	}
 } else {
-	echo("Failed insert game");
+	echo("Error: Failed insert game");
+	exit;
 }
 
 echo($message_great_success);
@@ -98,9 +103,12 @@ function insert_score($score) {
 	return insert($query);
 }
 
-function insert_teamscore($teamscore) {
-	global $insert_teamscore;
-	$query = sprintf($insert_teamscore, $teamscore->Place, $teamscore->Points, $teamscore->GameId, $teamscore->TeamId);
+function insert_teamgame($teamgame) {
+	global $insert_teamgame;
+	echo((string)$teamgame);
+	$query = sprintf($insert_teamgame, $teamgame->Place, $teamgame->Points, $teamgame->GameId, $teamgame->TeamId);
+	echo($query);
+	return insert($query);
 }
 
 function insert($query) {

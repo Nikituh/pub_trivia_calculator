@@ -32,7 +32,7 @@ body {
 	height: 25px;
 	float: left;
 	margin-left: 30px;
-	margin-top: 12.5px;
+	margin-top: 10px;
 	background-size: contain;
 	background-repeat: no-repeat;
 	
@@ -52,7 +52,7 @@ body {
 	background-image: url("../images/icon-test.png");
 	height: 40px;
 	width: 40px;
-	margin-top: 12px;
+	margin-top: 10px;
 	margin-left: 70px;
 }
 

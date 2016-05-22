@@ -48,19 +48,12 @@ body {
 	background-image: url("../images/icon-team-remove.png");
 }
 
-.show_ordered_list_button {
-	width: 35px;
-	height: 35px;
-	margin-top: 7.5px;
-	margin-left: 70px;
-	background-image: url("../images/icon-award.png");
-}
-
 .toggle_popup_button {
 	background-image: url("../images/icon-test.png");
 	height: 40px;
 	width: 40px;
 	margin-top: 12px;
+	margin-left: 70px;
 }
 
 .finish_button {
@@ -84,6 +77,13 @@ body {
 	width: 100%;
 	border-collapse:separate;
     border-spacing:0 3px;
+}
+
+.team_table_ordered {
+	width: 100%;
+	border-collapse:separate;
+    border-spacing:0 3px;
+    margin-top: 50px;
 }
 
 .team_row {
@@ -121,6 +121,10 @@ body {
 	background-color: #F0F0F0;
 }
 
+th {
+	height: 30px;
+	line-height: 30px;
+}
 
 /******************** 
 	POPUP
@@ -135,10 +139,14 @@ body {
 }
 
 .popup_table_container {
-	min-height: 1000px;
+	
 	background-color: white;
 	margin-top: 70px;
+	background-color: #F0F0F0;
+	max-width: 900px;
 }
+
+
 
 
 

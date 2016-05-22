@@ -89,11 +89,39 @@ function getDate() {
 	} 
 
 	if (mm < 10) {
-		mm = '0'+mm;
+		mm = '0' + mm;
 	} 
 
 	return dd + '/' + mm + '/' + yyyy;
 }
+
+function GetSortedTeams() {
+
+	var sorted = [];
+
+	for (var i = 0; i < Teams.length; i++) {
+		var team = Teams[i];
+		sorted.push(team);
+	}
+
+	sorted.sort(compareTotal);
+
+	return sorted;
+}
+
+function compareTotal(a, b) {
+
+	if (a.Total() < b.Total()) {
+		return 1;
+	}
+
+	if (a.Total() > b.Total()) {
+		return -1;
+	}
+
+	return 0;
+}
+
 
 
 

@@ -140,9 +140,13 @@ $(document).ready(function() {
 		
 	function finishGame() {
 		console.log("FinishGame");
-		// IsGameFinished();
-		console.log(EncodeGame());
-		post();
+		// if (IsGameFinished()) {
+			var sorted = GetSortedTeams();
+			Teams = sorted;
+			post();
+		// } else {
+		// 	alert("Your game does not seem to be finished");
+		// }
 	}
 
 	function post() {
@@ -170,7 +174,7 @@ $(document).ready(function() {
 		SORTING LOGIC
 	*******************/
 
-	function updateTotal () {
+	function updateTotal (event) {
 		
 		var row = $(event.target).closest("tr");
 		var rowIndex = $("table tr").index(row);
@@ -182,12 +186,14 @@ $(document).ready(function() {
 		for (var i = 1; i < inputFields.length; i++) {
 			
 			var field = inputFields[i];
-			var value = parseInt(field.value);
-			
+			// var value = parseInt(field.value);
+			var value = parseFloat(field.value);
+
 			if (value != undefined && !isNaN(value)) {
 				var scoreIndex = i - 1;
 				team.Scores[scoreIndex] = value;
 			} else {
+				console.log(field);
 				console.log("value is undefined or nan");
 			}
 		}
@@ -224,15 +230,21 @@ $(document).ready(function() {
 				fields[0].value = team.Name;
 		}
 
-		for (var j = 1; j < fields.length; j++) {
+		var count = fields.length;
+
+		for (var j = 1; j < count; j++) {
 			var field = fields[j];
 			var index = j - 1;
 			var value = team.Scores[index];
-
-			if (value != undefined && !isNaN(value) && value != 0) {
+			
+			if (value != undefined && !isNaN(value)) {
 				field.value = value;
+				
+			} else {
+				console.log(team.Name + " - " + index + " - " + value + " is undefined or Nan");
 			}
 		}
+		
 	}
 
 });

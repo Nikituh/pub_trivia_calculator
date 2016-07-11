@@ -12,8 +12,6 @@ $message_great_success = "GREAT_SUCCESS";
 
 $payload = file_get_contents('php://input');
 
-// echo($payload);
-
 $json = json_decode($payload, true);
 $team_json = $json["teams"];
 
@@ -47,6 +45,18 @@ foreach ($team_json as $item) {
 	array_push($teams, $team);
 }
 
+$game->Teams = $teams;
+
+// echo("Payload received. Database access denied: Under construction. ");
+
+// $title = "Rocktoriin vol 95";
+// $message = $game->ToMessage();
+// $address = "aare.undo@gmail.com";
+
+// mail($address, $title, $message);
+// echo("But sent email with results to " . $address);
+// exit;
+
 $connection = new mysqli($mysql_server, $mysql_username, $mysql_password, $mysql_db);
 
 if ($connection->connect_error) {
@@ -63,16 +73,20 @@ if (insert_game($game)) {
 			// exit;
 		}
 
+		$teamgame = new TeamGame();
+		$teamgame->GameId = $game->Id;
+		$teamgame->TeamId = $team->Id;
+		$teamgame->Points = $team->GetTotal();
+		$teamgame->Place = 0;
+		
+		if (!insert_teamgame($teamgame)) {
+			echo("Error: Failed insert teamgame of team " . $team->Name);
+			exit;
+		}
+		
 		foreach ($team->Scores as $score) {
 			if (!insert_score($score)) {
 				echo("Error: Failed insert score of team " . $team->Name);
-			}
-
-			$teamgame = $score->GetTeamGame();
-			
-			if (!insert_teamgame($teamgame)) {
-				echo("Error: Failed insert teamgame of team " . $team->Name);
-				exit;
 			}
 		}
 	}
@@ -105,9 +119,7 @@ function insert_score($score) {
 
 function insert_teamgame($teamgame) {
 	global $insert_teamgame;
-	echo((string)$teamgame);
 	$query = sprintf($insert_teamgame, $teamgame->Place, $teamgame->Points, $teamgame->GameId, $teamgame->TeamId);
-	echo($query);
 	return insert($query);
 }
 

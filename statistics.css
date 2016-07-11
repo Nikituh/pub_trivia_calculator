@@ -1,0 +1,16 @@
+
+
+.game_header {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.game_team {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.game_team_score {
+	float: left;
+	width: 20%;
+}

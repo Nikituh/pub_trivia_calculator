@@ -27,6 +27,8 @@
 
 		content += getTotalLabel(0);
 
+		content += getTiebreakerField();
+
 		return content;
 	}
 
@@ -36,6 +38,10 @@
 
 	function getTotalLabel(value) {
 		return "<td class='row_data data_number total_field'>" + value + "</td>";
+	}
+
+	function getTiebreakerField() {
+		return "<td>" + "<input type='text' class='row_data data_input_field data_input_tiebreaker'>" + "</td>";
 	}
 
 	function getHeader() {
@@ -52,7 +58,13 @@
 	}
 
 	function getPopupRowContent (index, team) {
-		var content = "<td class='row_data data_number'> " + index + "</td>";
+
+		if (team.IsTiedWithAnyone()) {
+			var content = "<td class='row_data data_number tied_team'> " + index + "</td>";
+		} else {
+			var content = "<td class='row_data data_number'> " + index + "</td>";
+		}
+
 		content += getPopupInputLabel(team.Name, "data_team_name");
 
 		for (var i = 0; i < roundCount; i++) {

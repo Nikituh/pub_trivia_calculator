@@ -1,0 +1,42 @@
+
+
+.game_header {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.game_team {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 30px;
+}
+
+.game_organizer {
+	text-align: left;
+}
+.game_organized_date {
+	text-align: right;
+}
+
+.game_teams_container {
+	margin-top: 20px;
+}
+
+.game_team_score {
+	float: left;
+	width: 10%;
+}
+
+.game_separator {
+	background-color: lightgray;
+	width: 98%;
+	margin-left: 1%;
+	height: 1px;
+}
+
+.game_separator_vertical {
+	width: 1px;
+	height: 30px;
+	float: left;
+	background-color: lightgray;
+}

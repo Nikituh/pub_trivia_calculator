@@ -35,14 +35,14 @@ $sql_create_table_score = 'CREATE TABLE ' . $table_score . ' ('
 	.$column_id . ' INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
 	.$column_team_id . ' VARCHAR(' . $max_length . ')  NOT NULL,'
 	.$column_game_id . ' VARCHAR(' . $max_length . ')  NOT NULL,'
-	.$column_value . ' INT NOT NULL)';
+	.$column_value . ' FLOAT NOT NULL)';
 
 $sql_create_table_teamgame = 'CREATE TABLE ' . $table_teamgame . ' ('
 	.$column_id . ' INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
 	.$column_team_id . ' VARCHAR(' . $max_length . ')  NOT NULL,'
 	.$column_game_id . ' VARCHAR(' . $max_length . ')  NOT NULL,'
 	.$column_place . ' INT NOT NULL,'
-	.$column_points . ' INT NOT NULL)';
+	.$column_points . ' FLOAT NOT NULL)';
 
 // TABLE COMMANDS
 

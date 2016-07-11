@@ -1,8 +1,10 @@
 
+var DEFAULTNAME = "none";
+
 var Teams = [];
 
 function Team() {
-	this.Name = "none";
+	this.Name = DEFAULTNAME;
 	this.Scores = [0, 0, 0, 0, 0];
 }
 
@@ -25,6 +27,22 @@ Team.prototype.HasName = function() {
 	return this.Name != undefined && this.Name != "" && this.Name != "none";
 };
 
+Team.prototype.IsTiedWithAnyone = function() {
+	
+	for (var i = 0; i < Teams.length; i++) {
+		var team = Teams[i];
+
+		var isDifferentTeam = this.Name.localeCompare(team.Name);
+		var isNotNoneTeam = team.Name.localeCompare(DEFAULTNAME);
+
+		if (isDifferentTeam && isNotNoneTeam && this.Total() == team.Total()) {
+			return true;
+		}
+	}
+
+	return false;
+};
+
 Team.prototype.LogInfo = function() {
 	var log = this.Name + "[";
 
@@ -43,12 +61,24 @@ Team.prototype.LogInfo = function() {
 	console.log(log);
 };
 
+Team.prototype.Decode = function(data) {
+	this.Name = data.Name;
+
+	for (var i = 0; i < data.Scores.length; i++) {
+		var score = data.Scores[i];
+		this.Scores[i] = parseFloat(score.Value);
+	}
+
+};
+
 function IsGameFinished() {
 	for (var i = 0; i < Teams.length; i++) {
+		
 		var team = Teams[i];
 
-		for (var j = 0; j < team.Scores.length; i++) {
-			var score = team.Scores[i];
+		for (var j = 0; j < team.Scores.length; j++) {
+			var score = team.Scores[j];
+
 			if (score == 0) {
 				console.log("Game is not finished");
 				return false;
@@ -70,9 +100,11 @@ function EncodeGame() {
 		array.push({ "name": team.Name, "scores": team.Scores });
 	}
 	
-	var date = getDate();
+	var date = (new Date).getTime();
 	
-	var json = { "organizer": "KPT", "teams": array, "date": date };
+	var organizer = $(".organizer_text").val();
+	
+	var json = { "organizer": organizer, "teams": array, "date": date };
 
 	return JSON.stringify(json);
 }
@@ -124,6 +156,37 @@ function compareTotal(a, b) {
 
 
 
+function Game() {
+	this.Date = "";
+	this.Organizer = "";
+	this.Teams = [];
+}
+
+Game.prototype.Decode = function(data) {
+	this.Date = parseInt(data.Date);
+	this.Organizer = data.Organizer;
+
+	var teamsJSON = data.Teams;
+
+
+	for (var i = 0; i < teamsJSON.length; i++) {
+		var teamJSON = teamsJSON[i];
+
+		var team = new Team();
+		team.Decode(teamJSON);
+		this.Teams.push(team);
+	};
+};
+
+Game.prototype.GetParsedDate = function() {
+    var date = new Date(this.Date);
+    return prettyUp(date);
+};
+
+function prettyUp(date) {
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return date.getUTCDate() + " " + months[date.getUTCMonth()] + " " + date.getFullYear();
+}
 
 
 

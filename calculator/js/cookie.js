@@ -1,6 +1,6 @@
 
 
-var COOKIELIFETIME = 1;
+var COOKIELIFETIME = 8;
 
 var TEAMCOOKIE = 'TEAMS';
 
@@ -70,7 +70,7 @@ function getTeamFromJSON(json) {
 
 	for (var i = 0; i < scores.length; i++) {
 		var score = scores[i];
-		team.Scores[i] = parseInt(score);
+		team.Scores[i] = parseFloat(score);
 	}
 
 	return team;

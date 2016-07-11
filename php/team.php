@@ -16,6 +16,11 @@ class Team extends Base
 
         $id = str_replace(' ', '_', $id);
         $id = strtolower($id);
+        
+        $id = str_replace("ä", "", $id);
+        $id = str_replace("õ", "", $id);
+        $id = str_replace("ö", "", $id);
+        $id = str_replace("ü", "", $id);
 
         $this->Id = $id;
     }
@@ -53,6 +58,24 @@ class Team extends Base
             array_push($this->Scores, $score);
         }
     }
+
+    public function ToNewObject() {
+        $instance = new self();
+
+        $instance->Id = $this->Id;
+        $instance->Name = $this->Name;
+        
+        return $instance;
+    }
+
+    public static function FromRow($row) {
+        $instance = new self();
+
+        $instance->Id = $row['id'];
+        $instance->Name = $row['name'];
+
+        return $instance;
+    }
 }
 
 class Game extends Base
@@ -61,10 +84,34 @@ class Game extends Base
 
     public $Organizer;
 
-    public $Teams;
+    public $Teams = [];
 
     function __construct() {
        $this->Id = uniqid();
+    }
+
+    public static function FromRow($row) {
+        $instance = new self();
+
+        $instance->Id = $row['id'];
+        $instance->Date = $row['date'];
+        $instance->Organizer = $row['organizer'];
+
+        return $instance;
+    }
+
+    public function ToMessage() {
+        $message = "";
+
+        $message .= "Date: " . $this->Date . "\n";
+        $message .= "Organizer: " . $this->Organizer . "\n";
+        $message .= "\n";
+        echo("Teams: " . $this->Teams . "|");
+        foreach ($this->Teams as $team) {
+            $message .= $team->Name . ": " . $team->GetTotal() . "\n";
+        }
+
+        return $message;
     }
 }
 
@@ -77,13 +124,25 @@ class Score extends Base
     public $Value;
 
     public function GetTeamGame() {
-
         $teamgame = new TeamGame();
+
         $teamgame->GameId = $this->GameId;
         $teamgame->TeamId = $this->TeamId;
         $teamgame->Points = $this->Value;
         $teamgame->Place = 0;
+
         return $teamgame;
+    }
+
+    public static function FromRow($row) {
+        $instance = new self();
+
+        $instance->Id = $row['id'];
+        $instance->TeamId = $row['teamid'];
+        $instance->GameId = $row['gameid'];
+        $instance->Value = $row['value'];
+
+        return $instance;
     }
 }
 
@@ -103,6 +162,18 @@ class TeamGame extends Base
 
     public function __toString() {
         return $this->GameId . "/" . $this->TeamId . "/" . $this->Points . "/" . $this->Place;
+    }
+
+    public static function FromRow($row) {
+        $instance = new self();
+
+        $instance->Id = $row['id'];
+        $instance->TeamId = $row['teamid'];
+        $instance->GameId = $row['gameid'];
+        $instance->Points = $row['points'];
+        $instance->Place = $row['place'];
+        
+        return $instance;
     }
 }
 
